@@ -1,10 +1,16 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ManageProduct from './pages/ManageProduct';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>My Store Management App</h1>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/home/manage-product" element={<ManageProduct />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
