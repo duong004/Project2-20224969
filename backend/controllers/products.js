@@ -32,7 +32,41 @@ const show = async (req, res) => {
     }
 };
 
+const edit = async (req, res) => {
+    try {
+        const { product_edit } = req.body;
+        const updatedProduct = await Products.findByIdAndUpdate(
+            product_edit._id,
+            product_edit,
+            { new: true } // Trả về document sau khi update
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.json({ message: "success", product: updatedProduct });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const deletes = async (req, res) => {
+    try {
+        const { product_delete } = req.body;
+        const product = await Products.findByIdAndDelete(product_delete._id);
+        
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.status(200).json({ message: 'Product deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     create,
     show,
+    edit,
+    deletes,
 };

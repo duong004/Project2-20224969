@@ -6,6 +6,7 @@ function ManageProduct() {
     const [products, setProducts] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false); // State để điều khiển form
     const [refreshKey, setRefreshKey] = useState(0); // State để trigger refresh
+    const [editingProduct, setEditingProduct] = useState(null);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -33,9 +34,41 @@ function ManageProduct() {
         setRefreshKey(oldKey => oldKey + 1);
     };
 
+    const handleDelete = async (product) => {
+        if (window.confirm(`Bạn có chắc muốn xóa sản phẩm ${product.name}?`)) {
+            try {
+                const body = { user: {}, product_delete: product };
+                await fetch('http://localhost:5000/products/deletes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+                refreshProductList();
+            } catch (error) {
+                console.error("Lỗi khi xóa:", error);
+            }
+        }
+    };
+
+    const handleEdit = (product) => {
+        setEditingProduct(product); // Đưa sản phẩm cần sửa vào state
+        setIsFormVisible(true); // Mở form
+    };
+
+    const closeForm = () => {
+        setIsFormVisible(false);
+        setEditingProduct(null); // Reset sản phẩm đang sửa
+    };
+
     return (
         <div className="product-manager">
-            {isFormVisible && <ProductForm turnoff={() => setIsFormVisible(false)} refresh={refreshProductList} />}
+            {isFormVisible && (
+                <ProductForm 
+                    turnoff={closeForm} 
+                    refresh={refreshProductList}
+                    productToEdit={editingProduct}
+                />
+            )}
 
             <div className="header">
                 <h2>Quản lý hàng hóa</h2>
@@ -49,6 +82,7 @@ function ManageProduct() {
                         <th>Mã (SKU)</th>
                         <th>Giá bán</th>
                         <th>Tồn kho</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,11 +93,15 @@ function ManageProduct() {
                                 <td>{product.sku}</td>
                                 <td>{product.price}</td>
                                 <td>{product.stock_in_shelf}</td>
+                                <td>
+                                    <button onClick={() => handleEdit(product)}>Sửa</button>
+                                    <button onClick={() => handleDelete(product)}>Xóa</button>
+                                </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4">Không có sản phẩm nào.</td>
+                            <td colSpan="5">Không có sản phẩm nào.</td>
                         </tr>
                     )}
                 </tbody>

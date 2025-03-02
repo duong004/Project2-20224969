@@ -3,6 +3,8 @@ const router = express.Router();
 const productsController = require('../controllers/products');
 
 router.post('/create', productsController.create);
-router.post('/show', productsController.show); // Đổi thành POST để nhất quán với project gốc
+router.post('/show', productsController.show);
+router.post('/edit', productsController.edit);
+router.post('/deletes', productsController.deletes);
 
 module.exports = router;
