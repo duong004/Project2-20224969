@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './useAuth';
 import './intro.css';
 
 function LoginModal({ off, isSignup }) {
     const navigate = useNavigate();
+    const { login } = useAuth(); // Lấy hàm login từ context
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -35,8 +37,8 @@ function LoginModal({ off, isSignup }) {
             if (response.ok) {
                 alert(data.message);
                 if (!isSignup) {
-                    // Tạm thời chỉ chuyển hướng, chưa xử lý token
-                    navigate('/home/manage-product'); 
+                    login(data.user, data.token); // Sử dụng hàm login từ context
+                    navigate('/home/manage-product');
                 } else {
                     off(); // Đóng modal sau khi đăng ký thành công
                 }
