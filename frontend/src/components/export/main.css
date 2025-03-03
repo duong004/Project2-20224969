@@ -1,0 +1,11 @@
+.billing-container {
+    display: grid;
+    grid-template-areas:
+        "top-bar top-bar"
+        "product-list summary";
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+}
+.top-bar { grid-area: top-bar; }
+.product-list { grid-area: product-list; }
+.summary { grid-area: summary; padding: 20px; border: 1px solid #ccc; }

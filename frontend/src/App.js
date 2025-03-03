@@ -3,6 +3,7 @@ import MainIntro from './components/introduce/Main_intro.js';
 import ProtectedRoute from './components/introduce/protect.js';
 import LayoutDefault from './layouts/LayoutDefault';
 import ManageProduct from './pages/ManageProduct';
+import Export from './pages/Export'; 
 
 import './App.css';
 
@@ -24,6 +25,7 @@ function App() {
         >
           {/* Outlet của LayoutDefault sẽ render các route con này */}
           <Route path="manage-product" element={<ManageProduct />} />
+          <Route path="export" element={<Export />} />
         </Route>
       </Routes>
     </Router>
