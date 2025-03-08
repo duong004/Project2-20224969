@@ -1,4 +1,5 @@
 const Products = require('../modules/products');
+const Suppliers = require('../modules/supplier');
 
 const create = async (req, res) => {
     try {
@@ -64,9 +65,45 @@ const deletes = async (req, res) => {
     }
 };
 
+const get_supplier = async (req, res) => {
+    const { user } = req.body;
+    try {
+        const suppliers = await Suppliers.find({ owner: user.id_owner })
+            .populate("creater", "name email") // Lấy thông tin người tạo
+            .lean(); // .lean() để trả về plain object, nhanh hơn
+        res.json({ suppliers: suppliers, message: "success" });
+    } catch (error) {
+        res.status(500).json({ message: "Error", error });
+    }
+};
+
+const create_supplier = async (req, res) => {
+    const { name, email, phone, user } = req.body;
+    try {
+        let check = await Suppliers.findOne({ owner: user.id_owner, phone });
+        if (check) {
+            return res.status(400).json({ message: "Số điện thoại này đã được đăng ký cho nhà cung cấp khác." });
+        }
+        
+        let new_supplier = new Suppliers({
+            name,
+            email,
+            phone,
+            owner: user.id_owner,
+            creater: user._id, // user._id là người đang thực hiện hành động
+        });
+        await new_supplier.save();
+        res.status(201).json({ new_supplier, message: "success" });
+    } catch (err) {
+        res.status(500).json({ message: "Error creating supplier" });
+    }
+};
+
 module.exports = {
     create,
     show,
     edit,
     deletes,
+    get_supplier,
+    create_supplier,
 };
