@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './main.css';
+import ListManager from './form_show';
 
 function Billing() {
     const [allProducts, setAllProducts] = useState([]); // Danh sách tất cả sản phẩm
     const [currentBill, setCurrentBill] = useState([]);
     const [productCode, setProductCode] = useState("");
+    const [showCustomerManager, setShowCustomerManager] = useState(false);
 
     // Lấy danh sách sản phẩm từ API
     useEffect(() => {
@@ -79,59 +81,67 @@ function Billing() {
         }
     };
 
-    return (
-        <div className="billing-container">
-            <div className="top-bar">
-                <div className="form-group-sell">
-                    <label className="label-sell">Mã sản phẩm (SKU): </label>
-                    <input 
-                        className="input-sell"
-                        type="text"
-                        value={productCode}
-                        onChange={(e) => setProductCode(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && addProductToBill()}
-                    />
-                    <button className="button-sell" onClick={addProductToBill}>Thêm sản phẩm</button>
+    return (     
+        <>
+            {showCustomerManager && <ListManager turnoff={() => setShowCustomerManager(false)} supplier={false} />}
+            <div className="billing-container">
+                <div className="top-bar">
+                    <div className="form-group-sell">
+                        <label className="label-sell">Mã sản phẩm (SKU): </label>
+                        <input 
+                            className="input-sell"
+                            type="text"
+                            value={productCode}
+                            onChange={(e) => setProductCode(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && addProductToBill()}
+                        />
+                        <button className="button-sell" onClick={addProductToBill}>Thêm sản phẩm</button>
+                    </div>
+                    <div className="xx">
+                        <button className="create_user" onClick={() => setShowCustomerManager(true)}>
+                            Danh sách khách hàng
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div className="product-list">
-                <h2>Danh sách sản phẩm</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Tên sản phẩm</th>
-                            <th>Số lượng</th>
-                            <th>Giá bán</th>
-                            <th>Thành tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentBill.map((item, index) => (
-                            <tr key={index}>
-                                <td>{item.name}</td>
-                                <td>{item.quantity}</td>
-                                <td>{item.price} VND</td>
-                                <td>{(item.quantity * parseFloat(item.price.replace(/\./g, ''))).toLocaleString('vi-VN')} VND</td>
+                <div className="product-list">
+                    <h2>Danh sách sản phẩm</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giá bán</th>
+                                <th>Thành tiền</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-
-            <div className="summary">
-                <div className="result">
-                    <h2>Tổng hóa đơn: {calculateTotal().toLocaleString('vi-VN')} VND</h2>
+                        </thead>
+                        <tbody>
+                            {currentBill.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.name}</td>
+                                    <td>{item.quantity}</td>
+                                    <td>{item.price} VND</td>
+                                    <td>{(item.quantity * parseFloat(item.price.replace(/\./g, ''))).toLocaleString('vi-VN')} VND</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-                <button 
-                    className="button-sell" 
-                    style={{ color: "white", marginTop: "10px" }}
-                    onClick={handlePayment}
-                >
-                    Thanh toán
-                </button>
+
+                <div className="summary">
+                    <div className="result">
+                        <h2>Tổng hóa đơn: {calculateTotal().toLocaleString('vi-VN')} VND</h2>
+                    </div>
+                    <button 
+                        className="button-sell" 
+                        style={{ color: "white", marginTop: "10px" }}
+                        onClick={handlePayment}
+                    >
+                        Thanh toán
+                    </button>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

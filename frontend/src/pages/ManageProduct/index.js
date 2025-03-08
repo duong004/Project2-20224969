@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ProductForm from '../../components/Manage_product/ProductForm';
 import './index.css';
+import ListManager from '../../components/export/form_show';
 
 function ManageProduct() {
     const [products, setProducts] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false); // State để điều khiển form
     const [refreshKey, setRefreshKey] = useState(0); // State để trigger refresh
     const [editingProduct, setEditingProduct] = useState(null);
+    const [showSupplierManager, setShowSupplierManager] = useState(false);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -69,10 +71,17 @@ function ManageProduct() {
                     productToEdit={editingProduct}
                 />
             )}
+            {showSupplierManager && <ListManager turnoff={() => setShowSupplierManager(false)} supplier={true} />}
 
             <div className="header">
                 <h2>Quản lý hàng hóa</h2>
                 <button className="create-button" onClick={() => setIsFormVisible(true)}>Add</button>
+            </div>
+
+            <div className="extended-filter-bar">
+                <button className="supplier-button" onClick={() => setShowSupplierManager(true)}>
+                    Nhà cung cấp
+                </button>
             </div>
 
             <table className="product-table">

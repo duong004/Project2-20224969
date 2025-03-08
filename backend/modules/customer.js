@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const customerSchema = new mongoose.mongoose.Schema({
-    // Ở mức 3, ta chưa cần các trường phức tạp như rate, money, lastPurchaseDate
     name: { type: String },
     phone: { type: String, required: true, unique: true },
     email: { type: String },
