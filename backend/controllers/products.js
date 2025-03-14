@@ -3,26 +3,26 @@ const Suppliers = require('../modules/supplier');
 
 const create = async (req, res) => {
     try {
-        const { name, sku, price, stock_in_shelf } = req.body;
+        const { newPr, user } = req.body;
         
-        const productExists = await Products.findOne({ sku });
+        const productExists = await Products.findOne({ sku: newPr.sku, owner: user.id_owner });
         if (productExists) {
             return res.status(400).json({ message: 'SKU đã tồn tại' });
         }
 
-        const newProduct = new Products({
-            name,
-            sku,
-            price,
-            stock_in_shelf,
-            owner: '66515971167b58098c9b4e67' // Tạm thời hardcode owner ID
-        });
+        const productData = {
+            ...newPr,
+            owner: user.id_owner,
+        };
+
+        const newProduct = new Products(productData);
         await newProduct.save();
         res.status(201).json({ message: "Success", product: newProduct });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const show = async (req, res) => {
     try {
@@ -36,10 +36,14 @@ const show = async (req, res) => {
 const edit = async (req, res) => {
     try {
         const { product_edit } = req.body;
+        
+        // Logic xóa ảnh cũ trên Cloudinary sẽ được thêm sau
+        // ...
+
         const updatedProduct = await Products.findByIdAndUpdate(
             product_edit._id,
             product_edit,
-            { new: true } // Trả về document sau khi update
+            { new: true }
         );
 
         if (!updatedProduct) {

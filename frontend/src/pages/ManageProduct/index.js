@@ -87,6 +87,7 @@ function ManageProduct() {
             <table className="product-table">
                 <thead>
                     <tr>
+                        <th>Ảnh</th>
                         <th>Tên sản phẩm</th>
                         <th>Mã (SKU)</th>
                         <th>Giá bán</th>
@@ -95,24 +96,25 @@ function ManageProduct() {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.length > 0 ? (
-                        products.map(product => (
-                            <tr key={product._id}>
-                                <td>{product.name}</td>
-                                <td>{product.sku}</td>
-                                <td>{product.price}</td>
-                                <td>{product.stock_in_shelf}</td>
-                                <td>
-                                    <button onClick={() => handleEdit(product)}>Sửa</button>
-                                    <button onClick={() => handleDelete(product)}>Xóa</button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="5">Không có sản phẩm nào.</td>
+                    {products.map(product => (
+                        <tr key={product._id}>
+                            <td>
+                                <img 
+                                    src={product.image ? product.image.secure_url : 'https://via.placeholder.com/50'} 
+                                    alt={product.name} 
+                                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                />
+                            </td>
+                            <td>{product.name}</td>
+                            <td>{product.sku}</td>
+                            <td>{product.price}</td>
+                            <td>{product.stock_in_shelf}</td>
+                            <td>
+                                <button onClick={() => handleEdit(product)}>Sửa</button>
+                                <button onClick={() => handleDelete(product)}>Xóa</button>
+                            </td>
                         </tr>
-                    )}
+                    ))}
                 </tbody>
             </table>
         </div>
