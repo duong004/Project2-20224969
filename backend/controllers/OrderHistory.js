@@ -63,6 +63,33 @@ const saveOrderHistory = async (req, res) => {
     }
 };
 
+const getOrder = async (req, res) => {
+    try {
+        const { ownerId } = req.query; // Tạm thời chỉ filter theo ownerId
+        const result = await OrderHistory.find({ 
+            ownerId: new mongoose.Types.ObjectId(ownerId),
+            generalStatus: "pending" // Ở mức 3, chỉ hiện các đơn đang chờ xử lý
+        }).populate('supplierId', 'name email');
+
+        // Format lại dữ liệu cho giống project gốc
+        const formattedResult = result.map(order => ({
+            _id: order._id,
+            supplierId: order.supplierId._id,
+            generalStatus: order.generalStatus,
+            amount: order.amount,
+            updatedAt: order.updatedAt,
+            nameSupplier: order.supplierId.name,
+            emailSupplier: order.supplierId.email,
+        }));
+        
+        return res.status(200).json(formattedResult);
+    } catch (error) {
+        console.error("Error in getOrder query:", error);
+        return res.status(500).json({ message: "Server error" });
+    }
+};
+
 module.exports = {
     saveOrderHistory,
+    getOrder,
 };

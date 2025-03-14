@@ -1,0 +1,29 @@
+/* ... CSS cho header, modal, dropdown, bảng sản phẩm ... */
+.dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.dropdown li {
+    padding: 10px;
+    cursor: pointer;
+}
+.dropdown li:hover {
+    background-color: #f0f0f0;
+}
+.product-status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: white;
+}
+.product-status.pending {
+    background-color: #efc346;
+}
+.product-status.deliveried {
+    background-color: #5da452;
+}

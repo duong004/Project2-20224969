@@ -4,6 +4,7 @@ import ProtectedRoute from './components/introduce/protect.js';
 import LayoutDefault from './layouts/LayoutDefault';
 import ManageProduct from './pages/ManageProduct';
 import Export from './pages/Export'; 
+import Import from './pages/Import';
 
 import './App.css';
 
@@ -23,9 +24,9 @@ function App() {
             </ProtectedRoute>
           }
         >
-          {/* Outlet của LayoutDefault sẽ render các route con này */}
           <Route path="manage-product" element={<ManageProduct />} />
           <Route path="export" element={<Export />} />
+          <Route path="import" element={<Import />} /> 
         </Route>
       </Routes>
     </Router>
