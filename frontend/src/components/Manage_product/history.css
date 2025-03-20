@@ -1,0 +1,9 @@
+.history-mgmt-status {
+    padding: 4px 8px;
+    border-radius: 10px;
+    color: white;
+    text-transform: capitalize;
+}
+.history-mgmt-status.update { background-color: #f0ad4e; }
+.history-mgmt-status.delete { background-color: #d9534f; }
+.history-mgmt-status.create { background-color: #5cb85c; }

@@ -1,5 +1,6 @@
 const Products = require('../modules/products');
 const Suppliers = require('../modules/supplier');
+const History = require('../modules/history');
 
 const create = async (req, res) => {
     try {
@@ -35,7 +36,7 @@ const show = async (req, res) => {
 
 const edit = async (req, res) => {
     try {
-        const { product_edit } = req.body;
+        const { product_edit, user, detail } = req.body;
         
         // Logic xóa ảnh cũ trên Cloudinary sẽ được thêm sau
         // ...
@@ -49,6 +50,17 @@ const edit = async (req, res) => {
         if (!updatedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
+
+        // Ghi log sau khi cập nhật thành công
+        const history = new History({
+            owner: user.id_owner,
+            employee: user._id,
+            product: updatedProduct.name,
+            action: 'update',
+            details: detail || "Product information updated."
+        });
+        await history.save();
+
         res.json({ message: "success", product: updatedProduct });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -57,12 +69,23 @@ const edit = async (req, res) => {
 
 const deletes = async (req, res) => {
     try {
-        const { product_delete } = req.body;
+        const { product_delete, user, detail } = req.body;
         const product = await Products.findByIdAndDelete(product_delete._id);
         
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
+
+        // Ghi log sau khi xóa
+        const history = new History({
+            owner: user.id_owner,
+            employee: user._id,
+            product: product.name,
+            action: 'delete',
+            details: detail
+        });
+        await history.save();
+
         res.status(200).json({ message: 'Product deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -103,6 +126,19 @@ const create_supplier = async (req, res) => {
     }
 };
 
+// Thêm API để lấy lịch sử
+const get_history = async (req, res) => {
+    const { user } = req.body;
+    try {
+        const activities = await History.find({ owner: user.id_owner })
+            .populate('employee', 'name email')
+            .sort({ timestamp: -1 });
+        res.status(200).json(activities);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     create,
     show,
@@ -110,4 +146,5 @@ module.exports = {
     deletes,
     get_supplier,
     create_supplier,
+    get_history,
 };

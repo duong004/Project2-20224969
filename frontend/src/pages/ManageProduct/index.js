@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProductForm from '../../components/Manage_product/ProductForm';
 import './index.css';
 import ListManager from '../../components/export/form_show';
+import History from '../../components/Manage_product/history';
 
 function ManageProduct() {
     const [products, setProducts] = useState([]);
@@ -9,6 +10,7 @@ function ManageProduct() {
     const [refreshKey, setRefreshKey] = useState(0); // State để trigger refresh
     const [editingProduct, setEditingProduct] = useState(null);
     const [showSupplierManager, setShowSupplierManager] = useState(false);
+    const [showHistory, setShowHistory] = useState(false);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -78,9 +80,14 @@ function ManageProduct() {
                 <button className="create-button" onClick={() => setIsFormVisible(true)}>Add</button>
             </div>
 
+            {showHistory && <History turnoff={() => setShowHistory(false)} />}
+
             <div className="extended-filter-bar">
                 <button className="supplier-button" onClick={() => setShowSupplierManager(true)}>
                     Nhà cung cấp
+                </button>
+                <button className="history-button" onClick={() => setShowHistory(true)}>
+                    Xem lịch sử
                 </button>
             </div>
 

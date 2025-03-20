@@ -4,8 +4,10 @@ import debounce from 'lodash.debounce';
 import Modal from '../../components/ComponentExport/Modal';
 import { useAuth } from '../../components/introduce/useAuth';
 import './import.css';
-
+import OrderManagement from '../../components/test/index';
+import ModalDetail from './ModalDetail';
 import ContentOrder from './ContentOrder'; 
+
 
 function Import() {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +15,11 @@ function Import() {
     const [suggestions, setSuggestions] = useState([]); // Gợi ý tìm kiếm
     const [idProductAdded, setIdProductAdded] = useState([]); // Sản phẩm được thêm vào đơn
     const { user } = useAuth();
+    const [openDetail, setOpenDetail] = useState(false);
+    const [idOrder, setIdOrder] = useState(null);
+
+    const openModalDetail = () => setOpenDetail(true);
+    const closeModalDetail = () => setOpenDetail(false);
 
     const openModal = () => setIsOpen(true);
     const closeModal = () => setIsOpen(false);
@@ -55,6 +62,14 @@ function Import() {
 
     return (
         <>
+            <OrderManagement openModalDetail={openModalDetail} setIdOrder={setIdOrder} />
+            
+            <ModalDetail
+                isOpen={openDetail}
+                onClose={closeModalDetail}
+                idOrder={idOrder}
+            />
+            
             {/* Component bảng hiển thị đơn hàng đã có sẽ được thêm sau */}
             <div className="order-mgmt-header">
                 <h2 className="order-mgmt-title">Quản lý nhập hàng</h2>
