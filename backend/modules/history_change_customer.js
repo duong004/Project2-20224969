@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const supplierCHistory = new mongoose.Schema({
+const customerCHistory = new mongoose.Schema({
     owner: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Users', // Tham chiếu đến người chủ 
@@ -11,9 +11,9 @@ const supplierCHistory = new mongoose.Schema({
         ref: 'Users', 
         required: true 
     },
-    supplier: { 
-        type: String, 
-        required: true  
+    customer: { 
+        type:String,
+        required:true
     },
     action: { 
         type: String, 
@@ -30,6 +30,6 @@ const supplierCHistory = new mongoose.Schema({
 
 }, { timestamps: true });
 
-const SupplierCHistory = mongoose.model('supplierCHistory', supplierCHistory,'supplierCHistory');
+const CustomerCHistory = mongoose.model('customerCHistory', customerCHistory,'customerCHistory');
 
-module.exports = SupplierCHistory;
+module.exports = CustomerCHistory;

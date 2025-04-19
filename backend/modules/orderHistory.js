@@ -1,28 +1,25 @@
 const mongoose = require('mongoose');
 
 const orderHistorySchema = new mongoose.Schema({
-    supplierId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Suppliers',
-        required: true
+    supplierId:{
+        type: mongoose.Schema.Types.ObjectId
     },
-    generalStatus: {
-        type: String, 
-        required: true 
+    generalStatus:{
+        type: String
     },
-    amount: { // Tổng số tiền của đơn nhập
-        type: String, 
-        required: true 
+    amount:{
+        type: String
     },
-    ownerId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Users',
-        required: true
+    tax:{
+        type:Number
     },
-}, { 
+    ownerId:{
+        type: mongoose.Schema.Types.ObjectId
+    },
+},{ 
     timestamps: true,
 });
 
-const OrderHistory = mongoose.model('OrderHistory', orderHistorySchema, 'Order_History');
+const OrderHistory = mongoose.model('OrderHistory', orderHistorySchema,'Order_History');
 
 module.exports = OrderHistory;

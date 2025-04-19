@@ -1,32 +1,23 @@
 const mongoose = require('mongoose');
 
 const orderDetailHistorySchema = new mongoose.Schema({
-    orderId: { // Liên kết tới _id của OrderHistory
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrderHistory',
-        required: true
+    orderId: {
+        type: mongoose.Schema.Types.ObjectId
     },
     productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Products',
-        required: true
+        type: mongoose.Schema.Types.ObjectId
     },
     price: {
-        type: String,
-        required: true
+        type: String
     },
     quantity: {
-        type: String,
-        required: true
+        type: String
     },
     status: {
-        type: String,
-        required: true
+        type: String
     },
     ownerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
-        required: true
+        type: mongoose.Schema.Types.ObjectId
     },
 }, { 
     timestamps: true,

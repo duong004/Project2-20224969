@@ -2,78 +2,137 @@ const OrderDetailHistory = require('../modules/OrderDetailHistory');
 const OrderHistory = require('../modules/orderHistory');
 const Products = require('../modules/products');
 const mongoose = require('mongoose');
+const loggingOrder = require("../modules/loggingOrder");
 
 const updateDetail = async (req, res) => {
-    const { formData, status, total, ownerId } = req.body;
-    
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
+    const { formData,status,total,userName,userId,ownerId } = req.body;
+    const  data= {
+        formData,
+        status,
+        total,
+        userName,
+        userId,
+        ownerId,
+    }
+    console.log(data)
     try {
-        // Cập nhật trạng thái chung của đơn hàng cha
-        const orderHis = await OrderHistory.findById(formData[0].orderId).session(session);
+        const orderHis = await OrderHistory.findOne({
+        _id: new mongoose.Types.ObjectId(data.formData[0].orderId),
+        });
+
         if (!orderHis) {
-            throw new Error("Không tìm thấy đơn hàng cha");
+            return res.status(404).json({ message: "Order history not found" });
         }
-        orderHis.generalStatus = status;
-        orderHis.amount = total;
-        await orderHis.save({ session });
 
-        for (const info of formData) {
-            const orderDetail = await OrderDetailHistory.findById(info._id).session(session);
-            if (!orderDetail) continue;
+        if (orderHis.generalStatus !== data.status || orderHis.amount !== data.total) {
+            orderHis.generalStatus = data.status;
+            orderHis.amount = data.total;
+            orderHis.updatedAt = new Date().toISOString();
+            await orderHis.save();
+        }
 
-            const oldStatus = orderDetail.status;
-            orderDetail.status = info.status;
-            orderDetail.quantity = info.quantity;
-            await orderDetail.save({ session });
+        // Update each order detail
+        const promises = data.formData.map(async (info) => {
+        try {
+            const orderDetail = await OrderDetailHistory.findOne({
+                _id: new mongoose.Types.ObjectId(info._id),
+            });
 
-            // Nếu trạng thái chuyển thành "deliveried", cập nhật kho
-            if (oldStatus !== 'deliveried' && info.status === 'deliveried') {
-                await Products.findByIdAndUpdate(
-                    info.productId,
-                    { $inc: { stock_in_Warehouse: Number(info.quantity) } },
-                    { session }
-                );
+            if (!orderDetail) {
+                console.error(`Order detail with ID ${info._id} not found`);
+                return;
             }
+            const oldStatus = orderDetail.status;
+            // Check if status or quantity has changed
+            if (orderDetail.status !== info.status || orderDetail.quantity !== info.quantity) {
+                orderDetail.status = info.status;
+                orderDetail.quantity = info.quantity;
+                orderDetail.updatedAt = new Date().toISOString();
+                await orderDetail.save();
+
+                // Create a logging entry for the update
+                const newLogging = new loggingOrder({
+                    orderId: info.orderId,
+                    orderDetailId: info._id,
+                    status: info.status === "canceled" ? "delete" : "update",
+                    userId: data.userId,
+                    userName: data.userName,
+                    details: info.note,
+                    ownerId:ownerId,
+                });
+                await newLogging.save();
+            }
+
+            // Update product quantity if order is delivered
+            if (oldStatus === "pending" && info.status === "deliveried") {
+                const product = await Products.findOne({ _id: info.productId });
+            if (product) {
+                product.stock_in_Warehouse += Number(info.quantity);
+                await product.save();
+            } else {
+                console.error(`Product with ID ${info.productId} not found`);
+            }
+            }
+            
+        } catch (error) {
+            console.error("Error updating order detail:", error);
         }
-        
-        await session.commitTransaction();
+        });
+
+        // Wait for all promises to complete
+        await Promise.all(promises);
+
         res.status(200).json({ message: "Order details updated successfully" });
     } catch (error) {
-        await session.abortTransaction();
         console.error("Error updating order history:", error);
-        res.status(500).json({ message: "Server error", error: error.message });
-    } finally {
-        session.endSession();
+        res.status(500).json({ message: "Server error" });
     }
 };
 
 const listOrderDetail = async (req, res) => {
     const { idOrder } = req.query;
     try {
-        const orderDetails = await OrderDetailHistory.find({ orderId: new mongoose.Types.ObjectId(idOrder) })
-            .populate('productId', 'name image description'); // Lấy thông tin sản phẩm
-        
-        const formattedDetails = orderDetails.map(d => ({
-            _id: d._id,
-            orderId: d.orderId,
-            productId: d.productId._id,
-            status: d.status,
-            quantity: d.quantity,
-            updatedAt: d.updatedAt,
-            name: d.productId.name,
-            image: d.productId.image,
-            price: d.price,
-            description: d.productId.description,
-        }));
+        const orderDetails = await OrderDetailHistory.aggregate([
+        {
+            $match: { orderId: new mongoose.Types.ObjectId(idOrder) },
+        },
+        {
+            $lookup: {
+            from: "Products",
+            localField: "productId",
+            foreignField: "_id",
+            as: "product",
+            },
+        },
+        {
+            $unwind: {
+            path: "$product",
+            },
+        },
+        {
+            $project: {
+            orderId: 1,
+            productId: 1,
+            status: 1,
+            quantity: 1,
+            updatedAt: 1,
+            name: "$product.name",
+            image: "$product.image",
+            price: "$product.purchasePrice",
+            description: "$product.description",
+            },
+        },
+        ]);
 
-        res.json(formattedDetails);
+        if (orderDetails.length === 0) {
+            return res.status(404).json({ message: "Order details not found" });
+        }
+        res.json(orderDetails);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Server error" });
     }
 };
-
 
 module.exports = {
     updateDetail,
