@@ -1,13 +1,23 @@
 const login = require('./introduce');
+const temperary_public = require('./temperary_public')
 const products = require('./products');
-const sell=require('./sell')
-const Import=require('./import');
+const roles = require('./roles.route')
+const sell = require('./sell')
+const home = require('./home')
+const profile = require('./profile')
+const Import = require('./import');
+const Bank = require("./bank.js");
 
 function routes(app) {
+    app.use('/',temperary_public)    
     app.use('/login',login);
-    app.use('/products',products);
+    app.use('/products',products)
+    app.use('/roles', roles)
     app.use('/sell',sell);
+    app.use('/home',home);
+    app.use('/profile',profile)
     app.use("/import", Import);
+    app.use("/bank", Bank);
 }
 
 module.exports = routes;
