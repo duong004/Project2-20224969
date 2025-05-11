@@ -1,18 +1,27 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from './useAuth';
+// ProtectedRoute.js
+import React from "react";
+import { Navigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 function ProtectedRoute({ children }) {
-  const { user } = useAuth();
-  const location = useLocation();
+  const storedUser = Cookies.get("user");
+  let user = null;
 
-  if (!user) {
-    // Nếu chưa đăng nhập, chuyển hướng về trang chủ
-    // state: { from: location } để sau khi đăng nhập có thể quay lại trang trước đó
-    return <Navigate to="/" state={{ from: location }} replace />;
+  if (storedUser) {
+    try {
+      const decodedString = decodeURIComponent(storedUser);
+      user = JSON.parse(decodedString);
+    } catch (error) {
+      console.error("Không thể giải mã hoặc phân tích dữ liệu người dùng:", error);
+    }
   }
 
-  return children; // Nếu đã đăng nhập, hiển thị component con
+  if (!user) {
+    // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+    return <Navigate to="/" replace state={{ message: "Bạn phải đăng nhập" }} />;
+  }
+
+  return children;
 }
 
 export default ProtectedRoute;
