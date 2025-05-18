@@ -6,8 +6,9 @@ import ManageProduct from './pages/ManageProduct';
 import Export from './pages/Export'; 
 import Import from './pages/Import';
 import Home from './pages/Home';
-import RolesGroup from './pages/RolesGroup/index.js';
-import Permissions from './pages/Permission/index.js';
+import ManageAccount from './pages/ManageAccount/index';
+import RolesGroup from './pages/RolesGroup/index';
+import Permissions from './pages/Permission/index';
 
 import './App.css';
 
@@ -29,8 +30,9 @@ function App() {
         >
           <Route index element={<Home />} /> 
           <Route path="manage-product" element={<ManageProduct />} />
-          <Route path = 'roles-group' element={<RolesGroup/>}/>
-          <Route path = 'permissions' element={<Permissions/>}/>
+          <Route path="manage-account" element={<ManageAccount/>}/>
+          <Route path="roles-group" element={<RolesGroup/>}/>
+          <Route path="permissions" element={<Permissions/>}/>
           <Route path="export" element={<Export />} />
           <Route path="import" element={<Import />} /> 
         </Route>
