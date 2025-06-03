@@ -42,7 +42,7 @@ function RolesGroup() {
   };
 
   const sendRoleToBackend = async (newRoleData) => {
-    await createRole(newRoleData,user); // Thêm await
+    await createRole(newRoleData, user); // Thêm await
     const updatedRoles = await getRoles(user.id_owner);
     setRolesData(updatedRoles);
   };
@@ -142,22 +142,22 @@ function RolesGroup() {
             <form className="create-role-form" onSubmit={handleSubmit}>
               <h3>Create Role</h3>
               <input
-                  type="text"
-                  id="role"
-                  name="role"
-                  placeholder="Role"
-                  value={newRole.role}
-                  onChange={handleInputChange}
-                  required
+                type="text"
+                id="role"
+                name="role"
+                placeholder="Role"
+                value={newRole.role}
+                onChange={handleInputChange}
+                required
               />
               <input
-                  type="text"
-                  id="description"
-                  name="description"
-                  placeholder='Description'
-                  value={newRole.description}
-                  onChange={handleInputChange}
-                  required
+                type="text"
+                id="description"
+                name="description"
+                placeholder='Description'
+                value={newRole.description}
+                onChange={handleInputChange}
+                required
               />
               <button type="submit">Submit</button>
               <button type="button" className="cancel-btn" onClick={() => setIsFormVisible(false)}>Cancel</button>

@@ -1,11 +1,11 @@
-import Billing from '../../components/export/main';
+import Billing from '../../components/export/main'
 
-function Export() {
-    return (
-        <div>
-            <Billing />
-        </div>
-    );
-}
-
+function Export(){
+    return(
+      <>
+        <Billing />
+      </>
+    )
+  }
+  
 export default Export;

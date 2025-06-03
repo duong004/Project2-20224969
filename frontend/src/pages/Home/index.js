@@ -16,94 +16,93 @@ import {
 import "./x1.css";
 
 function Home() {
-    const { user, loading } = useAuth();
-    const [totalrevenue,setTotalrevenue] =useState({percentChange:"0%",totalRevenueToday:"0",state:""});
-    const [totalincome,setTotalincome] =useState({
-        profitToday:0,
-        profitYesterday:0,
-        percentChange:"0%",
-        message: "notchange",
-    });
-    const  [data,setData]=useState([])
-    const  [topproduct,setTopproduct]=useState([])
-    const [newcustomer,setNewcustomer] =useState({
-        customerToday:0,
-        customerYesterday:0,
-        percentChange:"0%",
-        state: "notchange",
-    });
-    const [pending,setPending]=useState({total:0,percent:"0%"})
-    const [act,setAct]=useState([])
-    const datas = [
-        { name: "Jan", "Khách hàng trung thành": 270, "khách hàng mới": 150, "Khách hàng quay lại": 542 },
-        { name: "Feb", "Khách hàng trung thành": 310, "khách hàng mới": 180, "Khách hàng quay lại": 520 },
-        { name: "Mar", "Khách hàng trung thành": 350, "khách hàng mới": 200, "Khách hàng quay lại": 560 },
-        { name: "Apr", "Khách hàng trung thành": 330, "khách hàng mới": 220, "Khách hàng quay lại": 480 },
-        { name: "May", "Khách hàng trung thành": 450, "khách hàng mới": 260, "Khách hàng quay lại": 550 },
-        { name: "Jun", "Khách hàng trung thành": 400, "khách hàng mới": 290, "Khách hàng quay lại": 580 },
-        { name: "Jul", "Khách hàng trung thành": 460, "khách hàng mới": 320, "Khách hàng quay lại": 620 },
-        { name: "Aug", "Khách hàng trung thành": 510, "khách hàng mới": 340, "Khách hàng quay lại": 680 },
-        { name: "Sep", "Khách hàng trung thành": 252, "khách hàng mới": 360, "Khách hàng quay lại": 740 },
-        { name: "Oct", "Khách hàng trung thành": 680, "khách hàng mới": 390, "Khách hàng quay lại": 820 },
-        { name: "Nov", "Khách hàng trung thành": 780, "khách hàng mới": 420, "Khách hàng quay lại": 890 },
-        { name: "Dec", "Khách hàng trung thành": 900, "khách hàng mới": 450, "Khách hàng quay lại": 980 },
-    ];
+  const { user, loading } = useAuth();
+  const [totalrevenue,setTotalrevenue] =useState({percentChange:"0%",totalRevenueToday:"0",state:""});
+  const [totalincome,setTotalincome] =useState({
+    profitToday:0,
+    profitYesterday:0,
+    percentChange:"0%",
+    message: "notchange",
+});
+const  [data,setData]=useState([])
+const  [topproduct,setTopproduct]=useState([])
+const [newcustomer,setNewcustomer] =useState({
+  customerToday:0,
+  customerYesterday:0,
+  percentChange:"0%",
+  state: "notchange",
+});
+const [pending,setPending]=useState({total:0,percent:"0%"})
+const [act,setAct]=useState([])
+  const datas = [
+    { name: "Jan", "Khách hàng trung thành": 270, "khách hàng mới": 150, "Khách hàng quay lại": 542 },
+    { name: "Feb", "Khách hàng trung thành": 310, "khách hàng mới": 180, "Khách hàng quay lại": 520 },
+    { name: "Mar", "Khách hàng trung thành": 350, "khách hàng mới": 200, "Khách hàng quay lại": 560 },
+    { name: "Apr", "Khách hàng trung thành": 330, "khách hàng mới": 220, "Khách hàng quay lại": 480 },
+    { name: "May", "Khách hàng trung thành": 450, "khách hàng mới": 260, "Khách hàng quay lại": 550 },
+    { name: "Jun", "Khách hàng trung thành": 400, "khách hàng mới": 290, "Khách hàng quay lại": 580 },
+    { name: "Jul", "Khách hàng trung thành": 460, "khách hàng mới": 320, "Khách hàng quay lại": 620 },
+    { name: "Aug", "Khách hàng trung thành": 510, "khách hàng mới": 340, "Khách hàng quay lại": 680 },
+    { name: "Sep", "Khách hàng trung thành": 252, "khách hàng mới": 360, "Khách hàng quay lại": 740 },
+    { name: "Oct", "Khách hàng trung thành": 680, "khách hàng mới": 390, "Khách hàng quay lại": 820 },
+    { name: "Nov", "Khách hàng trung thành": 780, "khách hàng mới": 420, "Khách hàng quay lại": 890 },
+    { name: "Dec", "Khách hàng trung thành": 900, "khách hàng mới": 450, "Khách hàng quay lại": 980 },
+  ];
 
   // if (!user) {
   //   return <div>Không có người dùng nào đăng nhập.</div>;
   // }
-    useEffect(() => {
-        const fetchData = async () => {
-        if (loading) return;
-        const get_revenue = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/home/total_revenue', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        user: user,
-                    }),
-                });
-    
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-    
-                const data = await response.json();
-                console.log("Revenue:", data);
-                setTotalrevenue(data);
-            } catch (error) {
-                console.error("Error fetching revenue:", error);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      if (loading) return;
+      const get_revenue = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/home/total_revenue', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user: user,
+            }),
+          });
   
-        const get_income = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/home/today_income', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        user: user,
-                    }),
-                });
-    
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-    
-                const data = await response.json();
-                console.log("Income:", data);
-                setTotalincome(data);
-            } catch (error) {
-                console.error("Error fetching income:", error);
-            }
-        };
-      
-        const get_customer = async () => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+  
+          const data = await response.json();
+          console.log("Revenue:", data);
+          setTotalrevenue(data);
+        } catch (error) {
+          console.error("Error fetching revenue:", error);
+        }
+      };
+  
+      const get_income = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/home/today_income', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user: user,
+            }),
+          });
+  
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+  
+          const data = await response.json();
+          console.log("Income:", data);
+          setTotalincome(data);
+        } catch (error) {
+          console.error("Error fetching income:", error);
+        }
+      };
+      const get_customer = async () => {
         try {
           const response = await fetch('http://localhost:5000/home/new_customer', {
             method: 'POST',
