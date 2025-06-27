@@ -2,17 +2,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: all 0.2s linear;
 }
-
 input{
     outline: none;
 }
-
 .main{
     width: 100%;
     height: 100vh;
 }
-
 body {
     position: relative;
     font-family: Arial, sans-serif;
@@ -52,7 +50,6 @@ header {
     cursor: pointer;
     border: 2px solid #000000;
 }
-
 .return{
     position: absolute;
     top:24px;
@@ -60,11 +57,9 @@ header {
     cursor: pointer;
 
 }
-
 .g_id_signin {
     text-align: center;
 }
-
 .auth-buttons .btn:hover {
     background-color: #000000;
     color: white;
@@ -76,15 +71,63 @@ header {
     text-align: center;
     font-size: 1.2rem;
 }
-
  .login{z-index: 2;
     position: absolute;
     font-family: Arial, sans-serif;
-    display: block;
+    display: none;
     left: 50%; 
     top: 50%;
     transform: translate(-50%,-50%);
+}/*
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
+
+.login-box {border:#000000 2px solid ;
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+*/
 
 .login-modal {
 
@@ -106,7 +149,6 @@ header {
 .login-header h2 {
     margin: 0;
     font-size: 24px;
-    color: white;
 }
 
 .close-btn {
@@ -140,14 +182,12 @@ header {
     justify-content: center;
     align-items: center;
 }
-
 .forgoogle{
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
 }
-
 .google-login .profile-img {
     margin-right: 10px;
 }
@@ -220,38 +260,4 @@ header {
 
 .signup-text a {
     color: #0079d3;
-}
-
-.custom-google-login {
-    background-color: #4285F4; /* Màu xanh của Google */
-    color: white;              /* Màu chữ trắng */
-    border: none;              /* Bỏ viền */
-    padding: 10px 20px;       /* Điều chỉnh padding */
-    border-radius: 5px;       /* Bo góc */
-    cursor: pointer;           /* Con trỏ chuột dạng tay */
-}
-
-/* facebook */
-.facebook-login-button {
-    margin-top: 10px;
-    width:100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff; /* Màu xanh của Facebook */
-    color: rgb(0, 0, 0); /* Màu chữ */
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-  
-.facebook-login-button:hover {
-    background-color: #365899; /* Màu khi hover */
-}
-  
-.facebook-icon {
-    height: 100%;
-    margin-right: 8px; /* Khoảng cách giữa icon và chữ */
 }

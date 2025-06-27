@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../introduce/useAuth";
 import { useLoading } from "../introduce/Loading";
-import { FaRegBell } from "react-icons/fa"; // Import đúng biểu tượng
+import { FaRegBell } from "react-icons/fa";
 import "./noti.css";
 
 const Notification = () => {
@@ -66,7 +66,6 @@ const Notification = () => {
     }
   };
   
-
   return (
     <div className="notification-container">
       <FaRegBell
@@ -96,7 +95,10 @@ const Notification = () => {
             products.map((product, index) => (
               <div className="notification-item" key={index}>
                 <img
-                  src={product.image?.secure_url || "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"}
+                  src={
+                    product.image?.secure_url || 
+                    "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"
+                  }
                   alt="Product"
                   style={{ width: "30px", height: "30px" }}
                 />

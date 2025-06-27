@@ -4,10 +4,12 @@ import { FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import {useAuth} from "../introduce/useAuth"
 import Avatar from '../Avatar';
+
 const Modal = () => {
-  const {user,logout} =useAuth();
+  const {user, logout} = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  console.log(user)
+  console.log(user);
+  
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
@@ -22,9 +24,7 @@ const Modal = () => {
 
     // Add event listener
     document.addEventListener('mousedown', handleClickOutside);
-
   }, [isOpen]);
-
 
   return (
     <div className="modal-wrapper">
@@ -32,9 +32,11 @@ const Modal = () => {
       {isOpen && (
         <div className="uy-modal-content">
           <div className="user-info">
-          <div className='uy-avatar-container'>
-          <div className='uy-avatar'><Avatar name={user.name} imageUrl={user.avatar} /></div>
-          </div>
+            <div className='uy-avatar-container'>
+              <div className='uy-avatar'>
+                <Avatar name={user.name} imageUrl={user.avatar} />
+              </div>
+            </div>
             <div className="user-details">
               <strong>{user.name}</strong>
               <span className="email">{user.email}</span>

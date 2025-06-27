@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
-import './loading.css'
+import './loading.css';
+
 // Tạo LoadingContext
 const LoadingContext = createContext();
 
@@ -8,7 +9,7 @@ export const useLoading = () => useContext(LoadingContext);
 export const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  // Hàm để kích hoạt loading
+  // Hàm để kích hoạt/hủy loading
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
 
@@ -19,15 +20,13 @@ export const LoadingProvider = ({ children }) => {
   );
 };
 
-// Component Loading hiển thị
+// Component Loading hiển thị khi loading = true
 export const Loading = () => {
   const { loading } = useLoading();
   
-  return (
-    loading ? (
-      <div className="loading-overlay">
-        <div className="spinner"></div>
-      </div>
-    ) : null
-  );
+  return loading ? (
+    <div className="loading-overlay">
+      <div className="spinner"></div>
+    </div>
+  ) : null;
 };

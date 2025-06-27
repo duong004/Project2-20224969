@@ -95,6 +95,7 @@
   cursor: pointer;
   margin-top: 15px;
 }
+
 .profile-info input{
  display: block;
   padding: 5px; /* Khoảng cách bên trong ô */
@@ -105,13 +106,6 @@
   margin-left: 50%;
   transform: translateX(-50%);
 }
-/* .bank-section {
-  margin: 20px 0;
-  padding: 15px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-} */
 
 .bank-header {
   display: flex;
@@ -199,6 +193,7 @@
   cursor: pointer;
   transition: "background-color 0.3s ease";
 }
+
 /* Dropdown chọn ngân hàng */
 .bank-select-container {
   margin: 20px 0;

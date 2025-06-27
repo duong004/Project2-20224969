@@ -1,5 +1,5 @@
 const express = require('express');
-const sell = require('../controllers/sell'); // Import controller
+const sell = require('../controllers/sell');
 const Author=require("../controllers/middlewareUserController.js")
 const router = express.Router();
 

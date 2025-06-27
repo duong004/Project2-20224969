@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import '../export/index.css';
 
 const initialOrders = [
@@ -15,11 +15,12 @@ const OrderManagement = () => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedOrder, setEditedOrder] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+
   const handleEditClick = (index, order) => {
     setEditingIndex(index);
     setEditedOrder({ ...order });
   };
-  let count=0;
+
   const handleSaveClick = () => {
     const updatedOrders = [...orders];
     updatedOrders[editingIndex] = editedOrder;
@@ -35,22 +36,23 @@ const OrderManagement = () => {
     const { name, value } = e.target;
     setEditedOrder(prevOrder => ({ ...prevOrder, [name]: value }));
   };
-  const filteredOrders = orders.filter(order => 
+
+  const filteredOrders = orders.filter(order =>
     order.client.toLowerCase().includes(searchTerm) ||
     order.email.toLowerCase().includes(searchTerm) ||
     order.country.toLowerCase().includes(searchTerm)
   );
 
-
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
+
   return (
     <div className="order-mgmt-container">
       <div className="order-mgmt-header">
         <h2 className="order-mgmt-title">Quản lý đơn hàng</h2>
         <div className="order-mgmt-header-controls">
-        <input
+          <input
             type="text"
             className="order-mgmt-search"
             placeholder="Search for..."
@@ -80,25 +82,25 @@ const OrderManagement = () => {
               <td>#{order.id}</td>
               <td>
                 {editingIndex === index ? (
-                 <div>
-                 <input
-                   type="text"
-                   name="client"
-                   value={editedOrder.client}
-                   onChange={handleEditChange}
-                 />
-                 <input
-                   type="email"
-                   name="email"
-                   value={editedOrder.email}
-                   onChange={handleEditChange}
-                 />
-               </div>
-             ) : (
-               <div>
-                 {order.client} <br />
-                 <small>{order.email}</small>
-               </div>
+                  <div>
+                    <input
+                      type="text"
+                      name="client"
+                      value={editedOrder.client}
+                      onChange={handleEditChange}
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      value={editedOrder.email}
+                      onChange={handleEditChange}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    {order.client} <br />
+                    <small>{order.email}</small>
+                  </div>
                 )}
               </td>
               <td>

@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const ToastContent = ({ title, message, color }) => (
   <div>
     <h4 style={{ margin: 0, color }}>{title}</h4>
-    <p style={{ margin: '5px 0 0', color: '#333',lineHeight:1.5 }}>{message}</p>
+    <p style={{ margin: '5px 0 0', color: '#333', lineHeight: 1.5 }}>{message}</p>
   </div>
 );
 
@@ -16,27 +16,39 @@ export const notify = (type, message, title) => {
   switch (type) {
     case 1:
       color = 'green';
-      toast.success(<ToastContent title={title} message={message} color={color} />, {
-        style: { borderLeft: `5px solid #47d864` }
-      });
+      toast.success(
+        <ToastContent title={title} message={message} color={color} />,
+        {
+          style: { borderLeft: `5px solid #47d864` },
+        }
+      );
       break;
     case 2:
       color = 'red';
-      toast.error(<ToastContent title={title} message={message} color={color} />, {
-        style: { borderLeft: `5px solid ${color}` }
-      });
+      toast.error(
+        <ToastContent title={title} message={message} color={color} />,
+        {
+          style: { borderLeft: `5px solid ${color}` },
+        }
+      );
       break;
     case 3:
       color = 'orange';
-      toast.warning(<ToastContent title={title} message={message} color={color} />, {
-        style: { borderLeft: `5px solid ${color}` }
-      });
+      toast.warning(
+        <ToastContent title={title} message={message} color={color} />,
+        {
+          style: { borderLeft: `5px solid ${color}` },
+        }
+      );
       break;
     default:
       color = 'blue';
-      toast.info(<ToastContent title={title} message={message} color={color} />, {
-        style: { borderLeft: `5px solid ${color}` }
-      });
+      toast.info(
+        <ToastContent title={title} message={message} color={color} />,
+        {
+          style: { borderLeft: `5px solid ${color}` },
+        }
+      );
   }
 };
 

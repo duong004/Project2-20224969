@@ -170,6 +170,7 @@
   background-color: #dc3545;
   color: white;
 }
+
 /* Small checkbox style */
 .order-mgmt-checkbox {
   width: 16px;
@@ -179,32 +180,39 @@
   accent-color: #007bff; /* Blue color for checked state */
   border-radius: 3px; /* Slight rounding for modern look */
 }
+
 .infoDetail:hover{
   background: #007bff;
   border-radius: 8px;
 }
+
 .order-mgmt-table th:first-child, 
 .order-mgmt-table td:first-child {
   width: 40px;
   text-align: center; /* Centering the checkbox */
 }
+
 .save{
   background-color:green ;
   color:rgb(255, 255, 255)
 }
+
 .save:hover{
   background-color:rgba(0, 128, 0, 0.783) ;
   color:rgba(255, 255, 255, 0.708)
 }
+
 .cancel{
   background-color: rgb(0, 0, 0);
   color: white;
   margin-top: 5px;
 }
+
 .cancel:hover{
   background-color: rgba(0, 0, 0, 0.468);
   color: rgba(255, 255, 255, 0.521);
 }
+
 .order-mgmt-container input[type="text"],
 .order-mgmt-container input[type="email"],
 .order-mgmt-container input[type="date"],
@@ -217,23 +225,25 @@
   border: 1px solid #ccc; /* Đường viền cho input */
   box-sizing: border-box; /* Bao gồm padding và border vào chiều rộng */
 }
+
 .order-mgmt-container td {
   max-width: 100px; /* Chiều rộng tối đa */
   overflow-wrap: break-word; /* Cho phép xuống dòng khi cần thiết */
   white-space: normal; /* Cho phép xuống dòng */
 }
 
-th:nth-child(5), td:nth-child(5) { /* Hành Động */
+th:nth-child(5), td:nth-child(5) {
  text-align: center;
 }
-th:nth-child(3), td:nth-child(3) { /* Hành Động */
+
+th:nth-child(3), td:nth-child(3) {
   text-align: center;
- }
- .order-mgmt-table tr:hover {
+}
+
+.order-mgmt-table tr:hover {
   background-color: #f1f1f1; 
   cursor: pointer;
 }
-
 
 .order-mgmt-table tr {
   transition: background-color 0.3s ease;

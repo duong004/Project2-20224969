@@ -4,17 +4,19 @@
     font-weight: 600;
     font-size: 20px;
 }
+
 .divide{
     height:2px;
     margin: 8px;
     background: #000;
 }
+
 .order-mgmt-search{
     padding-left: 6px;
     margin-left: 4px;
     width: 95%;
-  }
-  .btn-add-order{
+}
+.btn-add-order{
     border: none;
     background: transparent;
     background: #4568f5;
@@ -23,72 +25,85 @@
     display:block;
     padding: 0 8px;
     height: 34px;
-  }
-  .search-container{
+}
+  
+.search-container{
     display: flex;
     flex: 1;
-  }
-  .header-order{
+}
+  
+.header-order{
     margin:10px 12px;
     display: flex;
     justify-content: space-between;
     position: sticky; /* Đặt phần header ở vị trí cố định */
-  top: 0; /* Đặt khoảng cách từ đầu modal */
-  background: white; /* Nền trắng để giữ cho nó rõ ràng */
-  z-index: 10; /* Đảm bảo header ở trên cùng */
-  }
-  .dropdown{
-    margin-top: 4px;
-    background:#fbfbfb;
-    border-radius: 10px;
-    position: absolute; 
-    top: 100%; 
-    left: 0; 
-    scrollbar-width: thin;
-    background-color: white; 
-    z-index: 1000; 
-    border: 1px solid #ccc; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
-    width: 100%; 
-    max-height: 200px; 
-    overflow-y: auto; 
-  }
-  .search-item{
-    padding:  5px 10px 5px;
-  }
-  .search-container-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .search-container-img{
-      height:30px;
-      width:50px;
-      background-size: cover; /* Để ảnh phủ đầy div */
-      background-position: center; /* Căn giữa ảnh */
-  }
-  .search-item:last-child .divide {
-    display: none;
+    top: 0; /* Đặt khoảng cách từ đầu modal */
+    background: white; /* Nền trắng để giữ cho nó rõ ràng */
+    z-index: 10; /* Đảm bảo header ở trên cùng */
 }
+
+.dropdown{
+  margin-top: 4px;
+  background:#fbfbfb;
+  border-radius: 10px;
+  position: absolute; 
+  top: 100%; 
+  left: 0; 
+  scrollbar-width: thin;
+  background-color: white; 
+  z-index: 1000; 
+  border: 1px solid #ccc; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
+  width: 100%; 
+  max-height: 200px; 
+  overflow-y: auto; 
+}
+
+.search-item{
+  padding:  5px 10px 5px;
+}
+
+.search-container-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-container-img{
+    height:30px;
+    width:50px;
+    background-size: cover; /* Để ảnh phủ đầy div */
+    background-position: center; /* Căn giữa ảnh */
+}
+
+.search-item:last-child .divide {
+  display: none;
+}
+
 .search-result-container{
   position: relative;
   flex:1;
 }
+
 .search-item:hover{
   background: #ebebeb;
 }
+
 .body-modal{
   max-height: calc(80vh - 150px); /* Chiều cao còn lại cho phần body */
   overflow-y: auto; /* Thêm thanh cuộn cho phần nội dung */
   scrollbar-width: thin;
 }
+
 .dropdown-item{
   padding: 2px 0; /* Thêm padding cho item */
   cursor: pointer; /* Con trỏ chuột dạng pointer */
 }
+
 .dropdown-item:hover{
   background: #efefef;
 }
+
 .list-product-title{
   display:flex;
   justify-content: center;
@@ -96,11 +111,13 @@
   font-weight: 600;
   font-size: 24px;
 }
+
 .supplier{
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 table {
   width: 100%; /* Đảm bảo bảng chiếm toàn bộ chiều rộng */
   border-collapse: collapse; /* Gộp viền */
@@ -108,23 +125,27 @@ table {
 
 .product-status.pending{
   background: yellow;
-
 }
+
 .product-status.deliveried{
   background: greenyellow;
 }
+
 .product-status.canceled{
   background: red;
 }
+
 .dropdown.supplierOption{
   position: absolute;
-   top: 100%;
-   left: 0;
-   width:180px;
+  top: 100%;
+  left: 0;
+  width:180px;
 }
+
 .dropdown.supplier:hover{
   background: #eee;
 }
+
 .list-product-detail th, .list-product-detail td {
   padding: 8px; /* Khoảng cách trong ô */
   text-align: left; /* Căn trái nội dung */
@@ -134,18 +155,21 @@ table {
   text-align: center;
   background-color: #f4f4f4; /* Màu nền cho tiêu đề cột */
 }
+
 .list-product-detail td{
   vertical-align: middle;
 }
+
 /* Điều chỉnh chiều rộng các cột */
 .list-product-detail th:nth-child(1),.list-product-detail td:nth-child(1) { /* STT */
   width: 10px; /* Chiều rộng cho cột STT */
   text-align: center;
-
 }
+
 .list-product-detail th:nth-child(2),.list-product-detail td:nth-child(2) { /* Ảnh Mô Tả */
   width: 120px; /* Chiều rộng cho cột Ảnh Mô Tả */
 }
+
 .list-product-detail th:nth-child(3),.list-product-detail td:nth-child(3) { /* Sản Phẩm */
   width: 200px; /* Chiều rộng cho cột Sản Phẩm */
   text-align: center;
@@ -165,17 +189,20 @@ table {
   width: 70px; /* Chiều rộng cho cột Thành Tiền */
   
 }
+
 .list-product-detail td:nth-child(6){
   text-align: right;
 }
+
 .list-product-detail th:nth-child(7),.list-product-detail  td:nth-child(7) { /* Hành Động */
   width: 90px; /* Chiều rộng cho cột Hành Động */
 }
+
 .list-product-detail th:nth-child(8),.list-product-detail td:nth-child(8) { /* Hành Động */
   width: 10px; /* Chiều rộng cho cột Hành Động */
   text-align: center;
-
 }
+
 .list-product-detail th:nth-child(9),.list-product-detail td:nth-child(9) { /* Hành Động */
   width: 10px; /* Chiều rộng cho cột Hành Động */
   text-align: center;
@@ -189,20 +216,24 @@ table {
   background-size: cover; /* Để ảnh phủ đầy div */
   background-position: center;
 }
+
 .modal-body-product-name{
   margin-bottom: 10px;
   font-size: 20px;
   font-weight: 500;
 }
+
 .modal-body-product-description{
-color: #666;
-font-size: 13px;
+  color: #666;
+  font-size: 13px;
 }
+
 .Quantity{
   display: flex;
   align-items: center; 
   justify-content: center;
 }
+
 .Quantity-button{
   outline: none;
   padding: 4px 4px;
@@ -213,9 +244,11 @@ font-size: 13px;
   width: 18px;
   text-align: center;
 }
+
 .Quantity-button:hover{
   background: #eee;
 }
+
 .Quantity-input{
   width: 32px;
   text-align: center; 
@@ -224,12 +257,13 @@ font-size: 13px;
   border-radius: 4px;
   height: 24px;
 }
+
 .detail-button{
   outline: none;
   border: none;
   background: transparent;
-  
 }
+
 .dropdownRemove{
   position: absolute;
   top: -20px;
@@ -241,11 +275,12 @@ font-size: 13px;
   align-items: center;
   justify-content: center;
 }
+
 .dropdownRemove button{
   border: none;
   background: transparent;
-
 }
+
 .product-status{
   width: 100%;
   padding: 8px 0px;
@@ -260,11 +295,13 @@ font-size: 13px;
   font-size: 20px;
   font-weight: 600;
 }
+
 .complete-order{
   display: flex;
   justify-content: center;
   margin-top: 32px;
 }
+
 .complete-order button{
   border: none;
   background: rgb(29, 230, 29);

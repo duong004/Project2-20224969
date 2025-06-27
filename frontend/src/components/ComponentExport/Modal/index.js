@@ -4,18 +4,18 @@ import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import './Modal.css';
 
 const Modal = ({ isOpen, onClose, children }) => {
-    if (!isOpen) return null;
-  
-    return (
-      <div className="modal-overlay">
-        <div className="modal">
-          <button className="close-btn" onClick={onClose}>
-            <FontAwesomeIcon icon={faCircleXmark} className='modal-CircleX'/>
-          </button>
-          {children}
-        </div>
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal">
+        <button className="close-btn" onClick={onClose}>
+          <FontAwesomeIcon icon={faCircleXmark} className="modal-CircleX" />
+        </button>
+        {children}
       </div>
-    );
-  };
-  
-  export default Modal;
+    </div>
+  );
+};
+
+export default Modal;

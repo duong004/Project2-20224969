@@ -1,7 +1,10 @@
-const express = require('express');
+const express=require('express')
+const morgan = require('morgan')
 const cors = require('cors');
-const routes = require('./routes/main');
+const routes = require('./routes/main')
+const path = require('path');
 const connectDB = require('./modules/config/db');
+const bodyParser = require('body-parser');
 const setupSocket = require("./modules/config/socket");
 require('dotenv').config();
 
@@ -13,9 +16,11 @@ connectDB();
 // Main router
 routes(app);
 
-// Middlewares
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('combined'))
 app.use(express.json());
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 5000;
 
