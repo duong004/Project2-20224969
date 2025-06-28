@@ -227,7 +227,7 @@ function Home() {
         <div class="dashboard-container">
           <div class="dashboard-title">
             <h3>Trang chủ</h3>
-            <h6>Made by team 25</h6>
+            <h6>Made by Duong</h6>
           </div>
           <div class="dashboard-actions">
             <a href="#">Manage</a>
@@ -671,7 +671,7 @@ function Home() {
         <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="#">
-              TeaM_25
+              20224969
             </a>
           </li>
           <li class="nav-item">
@@ -683,11 +683,11 @@ function Home() {
         </ul>
       </nav>
       <div class="copyright">
-        2024, made with <i class="fa fa-heart heart text-danger"></i> by team_25
+        2025, made with <i class="fa fa-heart heart text-danger"></i> by Duong
       </div>
       <div>
         Distributed by
-        <a target="_blank" href="https://themewagon.com/">team_25</a>.
+        <a target="_blank" href="https://themewagon.com/">HUST</a>.
       </div>
     </div>
   </footer></>
