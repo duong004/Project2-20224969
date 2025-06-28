@@ -11,6 +11,7 @@ import Forgot_password from "./forgot_password"
 import Change_password from "./resetpassword"
 import {useLoading} from "./Loading"
 import top from './img/top.png'
+
 function LoginModal({ off, isSignup }) {
   // Sử dụng state để điều khiển hiển thị modal và form
   const { startLoading, stopLoading } = useLoading();
@@ -20,16 +21,19 @@ function LoginModal({ off, isSignup }) {
   const [isreset,setIsreset]=useState(false)
   const navigate = useNavigate();
   const { login } = useAuth();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     ...(isSignup && { username: "", confirmPassword: "",code:"" }), // Thêm confirmPassword nếu là đăng ký
   });
+
   // const isFormValid = formData.email && formData.password;
   const handleChange = (e) => {
     setError('');
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const submit_log = (e) => {
     e.preventDefault();
     if (isSignup) {
@@ -110,7 +114,6 @@ function LoginModal({ off, isSignup }) {
     }
   };
   
-  
   //google
   const responseMessage = (response) => {
     const credential = response.credential;
@@ -149,11 +152,11 @@ function LoginModal({ off, isSignup }) {
         console.log("Lỗi:", error);
       });
   };
-  
 
   const errorMessage = (error) => {
     console.log(error);
   };
+
   //facebook
   const handleResponse = (data) => {
     console.log(data); 
@@ -162,9 +165,11 @@ function LoginModal({ off, isSignup }) {
   const handleError = (error) => {
     console.error(error); 
   };
+
   const forgot=()=>{
-setIsforgot(true);
+    setIsforgot(true);
   }
+
   const sentagain = ()=>{
     setConfirm(false)
     const body = {
@@ -197,27 +202,34 @@ setIsforgot(true);
         console.error('Lỗi:', error);
       });
   }
-  return (<> 
-  {isreset&&<Change_password off={()=>{setIsreset(false)}} email={isreset}/>} 
-  {isforgot&&<Forgot_password off={()=>{setIsforgot(false)}} turnon={(email)=>{setIsreset(email)}}/>} 
+
+  return (
+    <>
+      {isreset && (
+        <Change_password off={() => { setIsreset(false); }} email={isreset} />
+      )}
+      {isforgot && (
+        <Forgot_password
+          off={() => { setIsforgot(false); }}
+          turnon={(email) => { setIsreset(email); }}
+        />
+      )}
       <GoogleOAuthProvider clientId="1039484967279-b0uv9c8m0t6v453c7im8f0jiopq82v3j.apps.googleusercontent.com">
         <div className="login">
           <div className="login-modal">
-          <div class="image-top">
-
-<img src={top} alt="Background" class="top-image"/>
-</div> 
+            <div className="image-top">
+              <img src={top} alt="Background" className="top-image" />
+            </div>
             <div className="login-header">
               <h2>{isSignup ? "Sign up" : "Login"}</h2>
-              <span className="close-btn" onClick={()=>{off(0)}}>
+              <span className="close-btn" onClick={() => { off(0); }}>
                 &times;
               </span>
             </div>
-            
+
             <p>
               By continuing, you agree to our <a href="#">User Agreement</a> and
-              acknowledge that you understand the <a href="#">Privacy Policy</a>
-              .
+              acknowledge that you understand the <a href="#">Privacy Policy</a>.
             </p>
 
             <button className="login-option">Continue with phone number</button>
@@ -233,19 +245,20 @@ setIsforgot(true);
                 className="custom-google-login"
               />
             </div>
-            <FacebookProvider appId="1509733739672960"> 
-      <LoginButton
-        scope="email" 
-        onCompleted={handleResponse}
-        onError={handleError}
-        className="facebook-login-button"
-      >
-        <span className="facebook-icon" >
-          <img src={facebook} style={{height:"40px"}}></img>
-</span> 
-        <span>Đăng nhập bằng Facebook</span>
-      </LoginButton>
-    </FacebookProvider>
+
+            <FacebookProvider appId="1509733739672960">
+              <LoginButton
+                scope="email"
+                onCompleted={handleResponse}
+                onError={handleError}
+                className="facebook-login-button"
+              >
+                <span className="facebook-icon">
+                  <img src={facebook} style={{ height: "40px" }} />
+                </span>
+                <span>Đăng nhập bằng Facebook</span>
+              </LoginButton>
+            </FacebookProvider>
 
             <div className="divider">
               <span>OR</span>
@@ -254,21 +267,21 @@ setIsforgot(true);
             <form className="login-form" onSubmit={submit_log}>
               <div className="form-group">
                 <input
-                 name="email"
+                  name="email"
                   type="text"
                   placeholder="Email"
                   value={formData.email}
-                  onChange={handleChange} // Cập nhật giá trị email
+                  onChange={handleChange}
                   required
                 />
               </div>
               <div className="form-group">
                 <input
-                name="password"
+                  name="password"
                   type="password"
                   placeholder="Password"
                   value={formData.password}
-                  onChange={handleChange} // Cập nhật giá trị password
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -296,37 +309,50 @@ setIsforgot(true);
                   />
                 </div>
               )}
-{confirm && (<>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="code"
-                    placeholder="điền mã xác nhận "
-                    value={formData.code}
-                    onChange={handleChange}
-                    required
-                  />
-                </div> 
-                <p className="sentagain" onClick={sentagain} >Gửi lại mã</p></>
+              {confirm && (
+                <>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="code"
+                      placeholder="điền mã xác nhận "
+                      value={formData.code}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <p className="sentagain" onClick={sentagain}>
+                    Gửi lại mã
+                  </p>
+                </>
               )}
               {!isSignup && (
-                <a className="forgot-password" onClick={forgot} style={{cursor:"pointer"}}>
+                <a className="forgot-password" onClick={forgot} style={{ cursor: "pointer" }}>
                   Forgot password?
                 </a>
               )}
               <button id="login-btn" type="submit">
                 {isSignup ? "Sign up" : "login"}
               </button>
-              <p style={{color:"red"}}>{error}</p>
+              <p style={{ color: "red" }}>{error}</p>
             </form>
+
             {!isSignup && (
               <p className="signup-text">
-                New to Myapp? <a style={{cursor:"pointer",color:"cornflowerblue"}} onClick={()=>{off(2)}}>Sign Up</a>
+                New to Myapp?{" "}
+                <a
+                  style={{ cursor: "pointer", color: "cornflowerblue" }}
+                  onClick={() => { off(2); }}
+                >
+                  Sign Up
+                </a>
               </p>
             )}
           </div>
         </div>
-      </GoogleOAuthProvider>  </>
-    )
+      </GoogleOAuthProvider>
+    </>
+  );
 }
+
 export default LoginModal;

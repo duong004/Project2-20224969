@@ -136,6 +136,7 @@
 .history-button:hover {
   background-color: #899300;
 }
+
 .x{
   background: rgba(255, 255, 255, 0.7); /* Nền mờ */
   backdrop-filter: blur(10px);
@@ -145,6 +146,7 @@
   margin-bottom: 20px;
   overflow: hidden;
 }
+
 .supplier-button {
   padding: 10px 20px;
   background-color: #45da0a;

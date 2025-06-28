@@ -14,6 +14,7 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
   const [banks, setBanks] = useState([]);
   const { startLoading, stopLoading } = useLoading();
   const { user, loading } = useAuth();
+
   useEffect(() => {
     const fetchBanks = async () => {
       try {
@@ -31,13 +32,18 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
         stopLoading();
       }
     };
+
     fetchBanks();
   }, []);
 
   const handleCustomerPaidChange = (e) => {
     const amount = parseFloat(e.target.value) || 0;
     setCustomerPaid(amount);
-    setChange(amount - totalAmount > 0 ? (amount - totalAmount).toLocaleString("vi-VN") : 0);
+    setChange(
+      amount - totalAmount > 0
+        ? (amount - totalAmount).toLocaleString("vi-VN")
+        : 0
+    );
   };
 
   const handleBankChange = (e) => {
@@ -67,6 +73,7 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
         paymentMethod: selectedBank ? "Ngân hàng" : "Tiền mặt",
         notes: "",
       };
+
       startLoading();
       const response = await fetch("http://localhost:5000/sell/history", {
         method: "POST",
@@ -74,6 +81,7 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
         body: JSON.stringify(billData),
       });
       stopLoading();
+
       if (response.ok) {
         notify(1, "Lưu hóa đơn thành công", "Thành công");
         await close();
@@ -91,21 +99,22 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
       <div className="modal-overlay">
         <div className="payment-modal" onClick={(e) => e.stopPropagation()}>
           <h2>KHÁCH THANH TOÁN</h2>
-          <p className="delete_bill" onClick={close}>
-            x
-          </p>
+          <p className="delete_bill" onClick={close}>x</p>
+
           <div>
             <label>Chọn máy in</label>
             <select>
               <option>Microsoft Print to PDF</option>
             </select>
           </div>
+
           <div>
             <label>Mẫu in hóa đơn</label>
             <select>
               <option>Hóa đơn bán hàng</option>
             </select>
           </div>
+
           <div>
             <label>Khách hàng</label>
             <input
@@ -115,31 +124,49 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
               onChange={(e) => {
                 setCustomerPhone(e.target.value);
                 const filtered = e.target.value
-                  ? customers.filter((customer) => customer.phone.includes(e.target.value))
+                  ? customers.filter((c) =>
+                      c.phone.includes(e.target.value)
+                    )
                   : [];
                 setSuggestion(filtered);
               }}
             />
             <ul id="suggestions-sell">
               {suggestions.map((customer, index) => (
-                <li key={index} onClick={() => { setCustomerPhone(customer.phone); setSuggestion([]); }}>
+                <li
+                  key={index}
+                  onClick={() => {
+                    setCustomerPhone(customer.phone);
+                    setSuggestion([]);
+                  }}
+                >
                   {customer.phone}
                 </li>
               ))}
             </ul>
           </div>
+
           <div className="total-amount">
             <label>Tổng tiền phải trả</label>
-            <p style={{ marginTop: "5px" }}>{totalAmount.toLocaleString("vi-VN")} VND</p>
+            <p style={{ marginTop: "5px" }}>
+              {totalAmount.toLocaleString("vi-VN")} VND
+            </p>
           </div>
+
           <div>
             <label>Tiền khách đưa</label>
-            <input type="number" value={customerPaid} onChange={handleCustomerPaidChange} />
+            <input
+              type="number"
+              value={customerPaid}
+              onChange={handleCustomerPaidChange}
+            />
           </div>
+
           <div>
             <label>Tiền trả lại khách</label>
             <input type="text" value={change} readOnly />
           </div>
+
           <div>
             <label>Ngân hàng</label>
             <select value={selectedBank} onChange={handleBankChange}>
@@ -151,17 +178,27 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
               ))}
             </select>
           </div>
+
           {selectedBankDetails && (
             <div className="bank-details">
               <h3>Thông tin ngân hàng</h3>
-              <p><strong>Tên:</strong> {selectedBankDetails.name}</p>
-              <p><strong>Số tài khoản:</strong> {selectedBankDetails.accountNumber}</p>
+              <p>
+                <strong>Tên:</strong> {selectedBankDetails.name}
+              </p>
+              <p>
+                <strong>Số tài khoản:</strong>{" "}
+                {selectedBankDetails.accountNumber}
+              </p>
               <div className="qr-code">
                 <h4>Mã QR</h4>
-                <img src={`https://img.vietqr.io/image/${selectedBankDetails.bankName}-${selectedBankDetails.accountNumber}-compact.jpg?amount=${totalAmount}`} alt="QR Code" />
+                <img
+                  src={`https://img.vietqr.io/image/${selectedBankDetails.bankName}-${selectedBankDetails.accountNumber}-compact.jpg?amount=${totalAmount}`}
+                  alt="QR Code"
+                />
               </div>
             </div>
           )}
+
           <div className="button-group">
             <button onClick={success}>F5 In</button>
             <button className="cancel-button" onClick={close}>

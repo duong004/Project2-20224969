@@ -1,4 +1,3 @@
-// ImageUpload.js
 import React, { useState } from "react";
 
 const ImageUpload = () => {
@@ -16,7 +15,7 @@ const ImageUpload = () => {
       alert("Vui lòng chọn một hình ảnh để tải lên.");
       return;
     }
-console.log(image);
+    console.log(image);
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", UPLOAD_PRESET);
@@ -59,6 +58,3 @@ console.log(image);
 };
 
 export default ImageUpload;
-
-
-
